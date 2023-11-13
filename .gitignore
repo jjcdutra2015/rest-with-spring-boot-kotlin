@@ -1,0 +1,11 @@
+# IDEA
+# ----
+.idea
+.idea/
+.shelf
+*.iml
+*.iws
+/*.iml
+/*.ipr
+/*.iws
+/out
