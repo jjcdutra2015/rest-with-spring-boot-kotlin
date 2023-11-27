@@ -37,6 +37,12 @@ class PersonService {
         )
     }
 
+    fun create(person: Person) = person
+
+    fun update(person: Person) = person
+
+    fun delete(id: Long) {}
+
     private fun mockPerson(i: Int): Person {
         return Person(
             id = counter.incrementAndGet(),
