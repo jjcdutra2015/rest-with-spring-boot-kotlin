@@ -1,6 +1,6 @@
 package com.jjcdutra.controller
 
-import com.jjcdutra.PersonService
+import com.jjcdutra.service.PersonService
 import com.jjcdutra.model.Person
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType

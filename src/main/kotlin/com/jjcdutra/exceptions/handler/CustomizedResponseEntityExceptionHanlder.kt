@@ -1,5 +1,7 @@
-package com.jjcdutra.exceptions
+package com.jjcdutra.exceptions.handler
 
+import com.jjcdutra.exceptions.ExceptionResponse
+import com.jjcdutra.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -24,9 +26,9 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException::class)
-    fun handleUnsupportedMathOperationException(
-        ex: UnsupportedMathOperationException,
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun handleResourceNotFoundException(
+        ex: ResourceNotFoundException,
         request: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
@@ -34,6 +36,6 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
             ex.message,
             request.getDescription(false)
         )
-        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND)
     }
 }
