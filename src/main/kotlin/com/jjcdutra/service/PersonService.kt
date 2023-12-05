@@ -2,7 +2,7 @@ package com.jjcdutra.service
 
 import com.jjcdutra.data.vo.v1.PersonVO
 import com.jjcdutra.exceptions.ResourceNotFoundException
-import com.jjcdutra.mapper.DozerMapper
+import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Person
 import com.jjcdutra.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,7 +21,7 @@ class PersonService {
         logger.info("Finding all persons!")
         val persons = repository.findAll()
 
-        return DozerMapper.parseObjects(persons, PersonVO::class.java)
+        return Mapper.parseObjects(persons, PersonVO::class.java)
     }
 
     fun findById(id: Long): PersonVO {
@@ -29,13 +29,13 @@ class PersonService {
         val entity = repository.findById(id).orElseThrow {
             ResourceNotFoundException("Not records found for this ID $id!")
         }
-        return DozerMapper.parseObject(entity, PersonVO::class.java)
+        return Mapper.parseObject(entity, PersonVO::class.java)
     }
 
     fun create(personVO: PersonVO): PersonVO {
         logger.info("Creating one person with name ${personVO.firstName}!")
-        val entity = DozerMapper.parseObject(personVO, Person::class.java)
-        return DozerMapper.parseObject(repository.save(entity), PersonVO::class.java)
+        val entity = Mapper.parseObject(personVO, Person::class.java)
+        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
     }
 
     fun update(personVO: PersonVO): PersonVO {
@@ -49,7 +49,7 @@ class PersonService {
         entity.address = personVO.address
         entity.gender = personVO.gender
 
-        return DozerMapper.parseObject(repository.save(entity), PersonVO::class.java)
+        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
     }
 
     fun delete(id: Long) {

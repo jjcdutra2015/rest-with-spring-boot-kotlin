@@ -1,14 +1,14 @@
 package com.jjcdutra.unittest.mapper
 
 import com.jjcdutra.data.vo.v1.PersonVO
-import com.jjcdutra.mapper.DozerMapper
+import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Person
 import com.jjcdutra.unittest.mapper.mocks.MockPerson
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class DozerMapperTest {
+class MapperTest {
 
     var inputObject: MockPerson? = null
 
@@ -19,7 +19,7 @@ class DozerMapperTest {
 
     @Test
     fun parseEntityToVOTest() {
-        val output: PersonVO = DozerMapper.parseObject(inputObject!!.mockEntity(), PersonVO::class.java)
+        val output: PersonVO = Mapper.parseObject(inputObject!!.mockEntity(), PersonVO::class.java)
         assertEquals(0, output.id)
         assertEquals("First Name Test0", output.firstName)
         assertEquals("Last Name Test0", output.lastName)
@@ -30,7 +30,7 @@ class DozerMapperTest {
     @Test
     fun parseEntityListToVOListTest() {
         val outputList: ArrayList<PersonVO> =
-            DozerMapper.parseObjects(inputObject!!.mockEntityList(), PersonVO::class.java)
+            Mapper.parseObjects(inputObject!!.mockEntityList(), PersonVO::class.java)
 
         val outputZero: PersonVO = outputList[0]
 
@@ -58,7 +58,7 @@ class DozerMapperTest {
     @Test
     fun parseVOToEntityTest() {
 
-        val output: Person = DozerMapper.parseObject(inputObject!!.mockVO(), Person::class.java)
+        val output: Person = Mapper.parseObject(inputObject!!.mockVO(), Person::class.java)
 
         assertEquals(0, output.id)
         assertEquals("First Name Test0", output.firstName)
@@ -70,7 +70,7 @@ class DozerMapperTest {
     @Test
     fun parserVOListToEntityListTest() {
 
-        val outputList: ArrayList<Person> = DozerMapper.parseObjects(inputObject!!.mockVOList(), Person::class.java)
+        val outputList: ArrayList<Person> = Mapper.parseObjects(inputObject!!.mockVOList(), Person::class.java)
 
         val outputZero: Person = outputList[0]
         assertEquals(0, outputZero.id)
