@@ -1,11 +1,13 @@
 package com.jjcdutra.service
 
+import com.jjcdutra.controller.PersonController
 import com.jjcdutra.data.vo.v1.PersonVO
 import com.jjcdutra.exceptions.ResourceNotFoundException
 import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Person
 import com.jjcdutra.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
 
@@ -29,7 +31,13 @@ class PersonService {
         val entity = repository.findById(id).orElseThrow {
             ResourceNotFoundException("Not records found for this ID $id!")
         }
-        return Mapper.parseObject(entity, PersonVO::class.java)
+        val personVO = Mapper.parseObject(entity, PersonVO::class.java)
+
+        val withSelfRel = linkTo(PersonController::class.java).slash(personVO.id).withSelfRel()
+
+        personVO.add(withSelfRel)
+
+        return personVO
     }
 
     fun create(personVO: PersonVO): PersonVO {
