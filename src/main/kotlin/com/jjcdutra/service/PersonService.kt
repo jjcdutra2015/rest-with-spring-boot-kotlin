@@ -43,7 +43,12 @@ class PersonService {
     fun create(personVO: PersonVO): PersonVO {
         logger.info("Creating one person with name ${personVO.firstName}!")
         val entity = Mapper.parseObject(personVO, Person::class.java)
-        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
+
+        val vo = Mapper.parseObject(repository.save(entity), PersonVO::class.java)
+        val withSelfRel = linkTo(PersonController::class.java).slash(vo.id).withSelfRel()
+        vo.add(withSelfRel)
+
+        return vo
     }
 
     fun update(personVO: PersonVO): PersonVO {
@@ -57,7 +62,11 @@ class PersonService {
         entity.address = personVO.address
         entity.gender = personVO.gender
 
-        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
+        val vo = Mapper.parseObject(repository.save(entity), PersonVO::class.java)
+        val withSelfRel = linkTo(PersonController::class.java).slash(vo.id).withSelfRel()
+        vo.add(withSelfRel)
+
+        return vo
     }
 
     fun delete(id: Long) {
