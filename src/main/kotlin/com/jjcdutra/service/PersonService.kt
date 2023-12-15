@@ -24,7 +24,14 @@ class PersonService {
         logger.info("Finding all persons!")
         val persons = repository.findAll()
 
-        return Mapper.parseObjects(persons, PersonVO::class.java)
+        val listPerson = Mapper.parseObjects(persons, PersonVO::class.java)
+
+        for (person in listPerson) {
+            val withSelfRel = linkTo(PersonController::class.java).slash(person.id).withSelfRel()
+            person.add(withSelfRel)
+        }
+
+        return listPerson
     }
 
     fun findById(id: Long): PersonVO {
