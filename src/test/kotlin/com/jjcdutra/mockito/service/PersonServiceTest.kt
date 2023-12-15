@@ -1,5 +1,6 @@
 package com.jjcdutra.mockito.service
 
+import com.jjcdutra.exceptions.RequiredObjectIsNullException
 import com.jjcdutra.repository.PersonRepository
 import com.jjcdutra.service.PersonService
 import com.jjcdutra.unittest.mapper.mocks.MockPerson
@@ -76,6 +77,18 @@ class PersonServiceTest {
     }
 
     @Test
+    fun createWithNullObject() {
+        val exception = assertThrows(RequiredObjectIsNullException::class.java) {
+            service.create(null)
+        }
+
+        val expectedMessage = "It is not allowed to persist a null object!"
+        val actualMessage = exception.message
+
+        assertTrue(actualMessage!!.contains(expectedMessage))
+    }
+
+    @Test
     fun update() {
         val entity = inputObject.mockEntity(1)
 
@@ -96,6 +109,18 @@ class PersonServiceTest {
         assertEquals("First Name Test1", result.firstName)
         assertEquals("Last Name Test1", result.lastName)
         assertEquals("Female", result.gender)
+    }
+
+    @Test
+    fun updateWithNullObject() {
+        val exception = assertThrows(RequiredObjectIsNullException::class.java) {
+            service.update(null)
+        }
+
+        val expectedMessage = "It is not allowed to persist a null object!"
+        val actualMessage = exception.message
+
+        assertTrue(actualMessage!!.contains(expectedMessage))
     }
 
     @Test

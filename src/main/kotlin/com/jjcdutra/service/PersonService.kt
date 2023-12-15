@@ -2,6 +2,7 @@ package com.jjcdutra.service
 
 import com.jjcdutra.controller.PersonController
 import com.jjcdutra.data.vo.v1.PersonVO
+import com.jjcdutra.exceptions.RequiredObjectIsNullException
 import com.jjcdutra.exceptions.ResourceNotFoundException
 import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Person
@@ -40,7 +41,8 @@ class PersonService {
         return personVO
     }
 
-    fun create(personVO: PersonVO): PersonVO {
+    fun create(personVO: PersonVO?): PersonVO {
+        if (personVO == null) throw RequiredObjectIsNullException()
         logger.info("Creating one person with name ${personVO.firstName}!")
         val entity = Mapper.parseObject(personVO, Person::class.java)
 
@@ -51,7 +53,8 @@ class PersonService {
         return vo
     }
 
-    fun update(personVO: PersonVO): PersonVO {
+    fun update(personVO: PersonVO?): PersonVO {
+        if (personVO == null) throw RequiredObjectIsNullException()
         logger.info("Updating one person with ID ${personVO.id}!")
         val entity = repository.findById(personVO.id).orElseThrow {
             ResourceNotFoundException("Not records found for this ID ${personVO.id}!")
