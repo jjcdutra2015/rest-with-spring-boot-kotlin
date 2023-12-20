@@ -1,6 +1,6 @@
 package com.jjcdutra.service
 
-import com.jjcdutra.controller.PersonController
+import com.jjcdutra.controller.BookController
 import com.jjcdutra.data.vo.v1.BookVO
 import com.jjcdutra.exceptions.RequiredObjectIsNullException
 import com.jjcdutra.exceptions.ResourceNotFoundException
@@ -27,7 +27,7 @@ class BookService {
         val listBook = Mapper.parseObjects(books, BookVO::class.java)
 
         for (book in listBook) {
-            val withSelfRel = linkTo(PersonController::class.java).slash(book.id).withSelfRel()
+            val withSelfRel = linkTo(BookController::class.java).slash(book.id).withSelfRel()
             book.add(withSelfRel)
         }
 
@@ -41,7 +41,7 @@ class BookService {
         }
         val bookVO = Mapper.parseObject(entity, BookVO::class.java)
 
-        val withSelfRel = linkTo(PersonController::class.java).slash(bookVO.id).withSelfRel()
+        val withSelfRel = linkTo(BookController::class.java).slash(bookVO.id).withSelfRel()
 
         bookVO.add(withSelfRel)
 
@@ -54,7 +54,7 @@ class BookService {
         val entity = Mapper.parseObject(bookVO, Book::class.java)
 
         val vo = Mapper.parseObject(repository.save(entity), BookVO::class.java)
-        val withSelfRel = linkTo(PersonController::class.java).slash(vo.id).withSelfRel()
+        val withSelfRel = linkTo(BookController::class.java).slash(vo.id).withSelfRel()
         vo.add(withSelfRel)
 
         return vo
@@ -73,7 +73,7 @@ class BookService {
         entity.title = bookVO.title
 
         val vo = Mapper.parseObject(repository.save(entity), BookVO::class.java)
-        val withSelfRel = linkTo(PersonController::class.java).slash(vo.id).withSelfRel()
+        val withSelfRel = linkTo(BookController::class.java).slash(vo.id).withSelfRel()
         vo.add(withSelfRel)
 
         return vo
