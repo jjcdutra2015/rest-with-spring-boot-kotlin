@@ -9,4 +9,4 @@ data class PersonVO(
     var lastName: String = "",
     var address: String = "",
     var gender: String = ""
-): RepresentationModel<PersonVO>()
+) : RepresentationModel<PersonVO>()
