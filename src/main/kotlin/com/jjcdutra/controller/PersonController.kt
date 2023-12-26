@@ -55,7 +55,7 @@ class PersonController {
         return service.findAll()
     }
 
-    @CrossOrigin(origins = ["http://localhost:8080"])
+//    @CrossOrigin(origins = ["http://localhost:8080"])
     @GetMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
         summary = "Finds a Person", description = "Finds a Person", tags = ["People"],
@@ -90,7 +90,7 @@ class PersonController {
         return service.findById(id)
     }
 
-    @CrossOrigin(origins = ["http://localhost:8080"])
+//    @CrossOrigin(origins = ["http://localhost:8080"])
     @PostMapping(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
