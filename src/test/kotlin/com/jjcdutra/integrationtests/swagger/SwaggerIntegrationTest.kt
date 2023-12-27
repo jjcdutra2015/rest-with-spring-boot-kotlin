@@ -1,9 +1,8 @@
 package com.jjcdutra.integrationtests.swagger
 
-import com.jjcdutra.integrationtests.ConfigsTests
+import com.jjcdutra.integrationtests.TestConfigs
 import com.jjcdutra.integrationtests.testcontainers.AbstractIntegrationTest
 import io.restassured.RestAssured.given
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -16,7 +15,7 @@ class SwaggerIntegrationTest : AbstractIntegrationTest() {
 
         val content = given()
             .basePath("/swagger-ui/index.html")
-            .port(ConfigsTests.SERVER_PORT)
+            .port(TestConfigs.SERVER_PORT)
                 .`when`()
             .get()
             .then()
