@@ -1,6 +1,7 @@
 package com.jjcdutra.exceptions.handler
 
 import com.jjcdutra.exceptions.ExceptionResponse
+import com.jjcdutra.exceptions.InvalidJwtAuthenticationException
 import com.jjcdutra.exceptions.RequiredObjectIsNullException
 import com.jjcdutra.exceptions.ResourceNotFoundException
 import org.springframework.http.HttpStatus
@@ -51,5 +52,18 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
             request.getDescription(false)
         )
         return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException::class)
+    fun handleInvalidJwtAuthenticationException(
+        ex: InvalidJwtAuthenticationException,
+        request: WebRequest
+    ): ResponseEntity<ExceptionResponse> {
+        val exceptionResponse = ExceptionResponse(
+            Date(),
+            ex.message,
+            request.getDescription(false)
+        )
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.FORBIDDEN)
     }
 }
