@@ -19,7 +19,7 @@ class User : UserDetails {
     var fullName: String? = null
 
     @Column(name = "password")
-    var password: String? = null
+    private val password: String? = null
 
     @Column(name = "account_non_expired")
     var accountNonExpired: Boolean? = null

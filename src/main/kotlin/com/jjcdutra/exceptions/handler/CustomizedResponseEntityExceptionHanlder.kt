@@ -30,7 +30,7 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
 
     @ExceptionHandler(ResourceNotFoundException::class)
     fun handleResourceNotFoundException(
-        ex: ResourceNotFoundException,
+        ex: Exception,
         request: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
@@ -43,7 +43,7 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
 
     @ExceptionHandler(RequiredObjectIsNullException::class)
     fun handleBadRequestException(
-        ex: RequiredObjectIsNullException,
+        ex: Exception,
         request: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(
@@ -56,7 +56,7 @@ class CustomizedResponseEntityExceptionHandler : ResponseEntityExceptionHandler(
 
     @ExceptionHandler(InvalidJwtAuthenticationException::class)
     fun handleInvalidJwtAuthenticationException(
-        ex: InvalidJwtAuthenticationException,
+        ex: Exception,
         request: WebRequest
     ): ResponseEntity<ExceptionResponse> {
         val exceptionResponse = ExceptionResponse(

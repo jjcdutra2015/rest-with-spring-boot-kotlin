@@ -23,7 +23,7 @@ class BookController {
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
-        summary = "Finds all Books", description = "Finds all Books", tags = ["Books"],
+        summary = "Finds all Books", description = "Finds all Books",
         responses = [
             ApiResponse(
                 description = "Success", responseCode = "200",
@@ -57,7 +57,7 @@ class BookController {
 
     @GetMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
-        summary = "Finds a Book", description = "Finds a Book", tags = ["Books"],
+        summary = "Finds a Book", description = "Finds a Book",
         responses = [
             ApiResponse(
                 description = "Success", responseCode = "200",
@@ -94,7 +94,7 @@ class BookController {
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @Operation(
-        summary = "Adds a new Book", description = "Adds a new Book", tags = ["Books"],
+        summary = "Adds a new Book", description = "Adds a new Book",
         responses = [
             ApiResponse(
                 description = "Success", responseCode = "200",
@@ -123,7 +123,7 @@ class BookController {
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @Operation(
-        summary = "Updates a book's information", description = "Updates a book's information", tags = ["Books"],
+        summary = "Updates a book's information", description = "Updates a book's information",
         responses = [
             ApiResponse(
                 description = "Success", responseCode = "200",
@@ -157,7 +157,7 @@ class BookController {
 
     @DeleteMapping(value = ["/{id}"])
     @Operation(
-        summary = "Deletes a book", description = "Deletes a book", tags = ["Books"],
+        summary = "Deletes a book", description = "Deletes a book",
         responses = [
             ApiResponse(
                 description = "No Content", responseCode = "204",
