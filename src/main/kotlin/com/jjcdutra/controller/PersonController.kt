@@ -55,7 +55,7 @@ class PersonController {
         return service.findAll()
     }
 
-//    @CrossOrigin(origins = ["http://localhost:8080"])
+    //    @CrossOrigin(origins = ["http://localhost:8080"])
     @GetMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Operation(
         summary = "Finds a Person", description = "Finds a Person", tags = ["People"],
@@ -90,7 +90,7 @@ class PersonController {
         return service.findById(id)
     }
 
-//    @CrossOrigin(origins = ["http://localhost:8080"])
+    //    @CrossOrigin(origins = ["http://localhost:8080"])
     @PostMapping(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE]
@@ -155,6 +155,40 @@ class PersonController {
     )
     fun update(@RequestBody person: PersonVO): PersonVO {
         return service.update(person)
+    }
+
+    @PatchMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @Operation(
+        summary = "Disable a Person", description = "Disable a Person", tags = ["People"],
+        responses = [
+            ApiResponse(
+                description = "Success", responseCode = "200",
+                content = [Content(schema = Schema(implementation = PersonVO::class))]
+            ),
+            ApiResponse(
+                description = "No Content", responseCode = "204",
+                content = [Content(schema = Schema(implementation = Unit::class))]
+            ),
+            ApiResponse(
+                description = "Bad Request", responseCode = "400",
+                content = [Content(schema = Schema(implementation = Unit::class))]
+            ),
+            ApiResponse(
+                description = "Unauthorized", responseCode = "401",
+                content = [Content(schema = Schema(implementation = Unit::class))]
+            ),
+            ApiResponse(
+                description = "Not Found", responseCode = "404",
+                content = [Content(schema = Schema(implementation = Unit::class))]
+            ),
+            ApiResponse(
+                description = "Internal Error", responseCode = "500",
+                content = [Content(schema = Schema(implementation = Unit::class))]
+            )
+        ]
+    )
+    fun disablePersonById(@PathVariable(value = "id") id: Long): PersonVO {
+        return service.disablePerson(id)
     }
 
     @DeleteMapping(value = ["/{id}"])
