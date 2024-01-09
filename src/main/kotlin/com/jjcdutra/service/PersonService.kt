@@ -7,6 +7,7 @@ import com.jjcdutra.exceptions.ResourceNotFoundException
 import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Person
 import com.jjcdutra.repository.PersonRepository
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
@@ -77,6 +78,21 @@ class PersonService {
         vo.add(withSelfRel)
 
         return vo
+    }
+
+    @Transactional
+    fun disablePerson(id: Long): PersonVO {
+        logger.info("Disabling one person with ID $id")
+        repository.disablePerson(id)
+        val entity = repository.findById(id).orElseThrow {
+            ResourceNotFoundException("Not records found for this ID $id!")
+        }
+        val personVO = Mapper.parseObject(entity, PersonVO::class.java)
+
+        val withSelfRel = linkTo(PersonController::class.java).slash(personVO.id).withSelfRel()
+        personVO.add(withSelfRel)
+
+        return personVO
     }
 
     fun delete(id: Long) {
