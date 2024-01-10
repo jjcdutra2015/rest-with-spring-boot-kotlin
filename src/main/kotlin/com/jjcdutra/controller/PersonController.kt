@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -56,9 +57,11 @@ class PersonController {
     )
     fun findAll(
         @RequestParam("page", defaultValue = "0") page: Int,
-        @RequestParam("limit", defaultValue = "12") limit: Int
+        @RequestParam("size", defaultValue = "12") size: Int,
+        @RequestParam("direction", defaultValue = "asc") direction: String
     ): ResponseEntity<Page<PersonVO>> {
-        val pageable: Pageable = PageRequest.of(page, limit)
+        val sort = if ("desc".equals(direction, ignoreCase = true)) Sort.Direction.DESC else Sort.Direction.ASC
+        val pageable: Pageable = PageRequest.of(page, size, Sort.by(sort, "firstName"))
         return ResponseEntity.ok(service.findAll(pageable))
     }
 
