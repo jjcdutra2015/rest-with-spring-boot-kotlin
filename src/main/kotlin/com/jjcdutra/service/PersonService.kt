@@ -9,8 +9,10 @@ import com.jjcdutra.model.Person
 import com.jjcdutra.repository.PersonRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PagedResourcesAssembler
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.PagedModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -21,15 +23,18 @@ class PersonService {
     @Autowired
     private lateinit var repository: PersonRepository
 
+    @Autowired
+    private lateinit var assembler: PagedResourcesAssembler<PersonVO>
+
     private val logger = Logger.getLogger(PersonService::class.java.name)
 
-    fun findAll(pageable: Pageable): Page<PersonVO> {
+    fun findAll(pageable: Pageable): PagedModel<EntityModel<PersonVO>> {
         logger.info("Finding all persons!")
         val persons = repository.findAll(pageable)
 
         val vos = persons.map { p -> Mapper.parseObject(p, PersonVO::class.java) }
 
-        return vos.map { p -> p.add(linkTo(PersonController::class.java).slash(p.id).withSelfRel()) }
+        return assembler.toModel(vos.map { p -> p.add(linkTo(PersonController::class.java).slash(p.id).withSelfRel()) })
     }
 
     fun findById(id: Long): PersonVO {
