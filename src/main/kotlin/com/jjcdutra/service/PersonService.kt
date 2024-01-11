@@ -37,6 +37,15 @@ class PersonService {
         return assembler.toModel(vos.map { p -> p.add(linkTo(PersonController::class.java).slash(p.id).withSelfRel()) })
     }
 
+    fun findPersonByName(firstName: String, pageable: Pageable): PagedModel<EntityModel<PersonVO>> {
+        logger.info("Finding all persons!")
+        val persons = repository.findPersonByName(firstName, pageable)
+
+        val vos = persons.map { p -> Mapper.parseObject(p, PersonVO::class.java) }
+
+        return assembler.toModel(vos.map { p -> p.add(linkTo(PersonController::class.java).slash(p.id).withSelfRel()) })
+    }
+
     fun findById(id: Long): PersonVO {
         logger.info("Finding one person with ID $id")
         val entity = repository.findById(id).orElseThrow {
