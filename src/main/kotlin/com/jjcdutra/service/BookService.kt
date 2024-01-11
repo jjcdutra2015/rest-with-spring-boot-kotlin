@@ -8,6 +8,10 @@ import com.jjcdutra.mapper.Mapper
 import com.jjcdutra.model.Book
 import com.jjcdutra.repository.BookRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PagedResourcesAssembler
+import org.springframework.hateoas.EntityModel
+import org.springframework.hateoas.PagedModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.stereotype.Service
 import java.util.logging.Logger
@@ -18,20 +22,18 @@ class BookService {
     @Autowired
     private lateinit var repository: BookRepository
 
+    @Autowired
+    private lateinit var assembler: PagedResourcesAssembler<BookVO>
+
     private val logger = Logger.getLogger(BookService::class.java.name)
 
-    fun findAll(): List<BookVO> {
+    fun findAll(pageable: Pageable): PagedModel<EntityModel<BookVO>> {
         logger.info("Finding all books!")
-        val books = repository.findAll()
+        val books = repository.findAll(pageable)
 
-        val listBook = Mapper.parseObjects(books, BookVO::class.java)
+        val vos = books.map { b -> Mapper.parseObject(b, BookVO::class.java) }
 
-        for (book in listBook) {
-            val withSelfRel = linkTo(BookController::class.java).slash(book.id).withSelfRel()
-            book.add(withSelfRel)
-        }
-
-        return listBook
+        return assembler.toModel(vos.map { b -> b.add(linkTo(BookController::class.java).slash(b.id).withSelfRel()) })
     }
 
     fun findById(id: Long): BookVO {
