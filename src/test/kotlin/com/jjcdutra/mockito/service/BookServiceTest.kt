@@ -32,47 +32,6 @@ class BookServiceTest {
         MockitoAnnotations.openMocks(this)
     }
 
-//    @Test
-//    fun findAll() {
-//        val list = inputObject.mockEntityList()
-//        `when`(repository.findAll()).thenReturn(list)
-//
-//        val books = service.findAll()
-//
-//        assertNotNull(books)
-//        assertEquals(14, books.size)
-//
-//        val bookOne = books[1]
-//        assertNotNull(bookOne)
-//        assertNotNull(bookOne.id)
-//        assertNotNull(bookOne.links)
-//        assertTrue(bookOne.links.toString().contains("</api/book/v1/1>;rel=\"self\""))
-//        assertEquals("Author Test1", bookOne.author)
-//        assertEquals("Title Test1", bookOne.title)
-//        assertEquals(1.0, bookOne.price)
-//        assertEquals(Date(1), bookOne.launchDate)
-//
-//        val bookFour = books[4]
-//        assertNotNull(bookFour)
-//        assertNotNull(bookFour.id)
-//        assertNotNull(bookFour.links)
-//        assertTrue(bookFour.links.toString().contains("</api/book/v1/4>;rel=\"self\""))
-//        assertEquals("Author Test4", bookFour.author)
-//        assertEquals("Title Test4", bookFour.title)
-//        assertEquals(4.0, bookFour.price)
-//        assertEquals(Date(4), bookFour.launchDate)
-//
-//        val bookSeven = books[7]
-//        assertNotNull(bookSeven)
-//        assertNotNull(bookSeven.id)
-//        assertNotNull(bookSeven.links)
-//        assertTrue(bookSeven.links.toString().contains("</api/book/v1/7>;rel=\"self\""))
-//        assertEquals("Author Test7", bookSeven.author)
-//        assertEquals("Title Test7", bookSeven.title)
-//        assertEquals(7.0, bookSeven.price)
-//        assertEquals(Date(7), bookSeven.launchDate)
-//    }
-
     @Test
     fun findById() {
         val book = inputObject.mockEntity(1)
