@@ -1,7 +1,7 @@
 cors:
   originPatterns: http://localhost:3000,http://localhost:8080
 file:
-  upload-dir: /Downloads
+  upload-dir: Code/UploadDir
 security:
   jwt:
     token:
@@ -22,7 +22,7 @@ spring:
     show-sql: false
   servlet:
     multipart:
-      enable: true
+      enabled: true
       file-size-threshold: 2KB
       max-file-size: 200MB
       max-request-size: 215MB

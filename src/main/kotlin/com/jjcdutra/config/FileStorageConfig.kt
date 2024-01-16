@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ConfigurationProperties(prefix = "file")
-class FileStorageConfig(val uploadDir: String = "")
+class FileStorageConfig(var uploadDir: String = "")
