@@ -2,7 +2,10 @@ package com.jjcdutra.service
 
 import com.jjcdutra.config.FileStorageConfig
 import com.jjcdutra.exceptions.FileStorageException
+import com.jjcdutra.exceptions.MyFileNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.Resource
+import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
@@ -36,6 +39,17 @@ class FileStorageService @Autowired constructor(fileStorageConfig: FileStorageCo
             fileName
         } catch (e: Exception) {
             throw FileStorageException("Could not store file $fileName. Please try again!", e)
+        }
+    }
+
+    fun loadFileAsResource(fileName: String): Resource {
+        return try {
+            val filePath = fileStorageLocation.resolve(fileName).normalize()
+            val resource = UrlResource(filePath.toUri())
+            if (resource.exists()) resource
+            throw MyFileNotFoundException("File not found $fileName!")
+        } catch (e: Exception) {
+            throw MyFileNotFoundException("File not found $fileName!", e)
         }
     }
 }
