@@ -3,11 +3,13 @@ package com.jjcdutra.controller
 import com.jjcdutra.data.vo.v1.UploadFileResponseVO
 import com.jjcdutra.service.FileStorageService
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.core.io.Resource
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.logging.Logger
@@ -40,5 +42,22 @@ class FileController {
             uploadFileResponseVOs.add(uploadFileResponseVO)
         }
         return uploadFileResponseVOs
+    }
+
+    @GetMapping("/downloadFile/{filename:.+}")
+    fun downloadFile(@PathVariable filename: String, request: HttpServletRequest): ResponseEntity<Resource> {
+        val resource = fileStorageService.loadFileAsResource(filename)
+        var contentType = ""
+        try {
+            contentType = request.servletContext.getMimeType(resource.file.absolutePath)
+        } catch (e: Exception) {
+            logger.info("Could not determine file type!")
+        }
+        if (contentType.isBlank()) contentType = "application/octet-stream"
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType(contentType))
+            .header(HttpHeaders.CONTENT_DISPOSITION, """"attachment; filename="${resource.filename}"""")
+            .body(resource)
     }
 }

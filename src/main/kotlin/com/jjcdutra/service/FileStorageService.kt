@@ -43,10 +43,10 @@ class FileStorageService @Autowired constructor(fileStorageConfig: FileStorageCo
     }
 
     fun loadFileAsResource(fileName: String): Resource {
-        return try {
+        try {
             val filePath = fileStorageLocation.resolve(fileName).normalize()
             val resource = UrlResource(filePath.toUri())
-            if (resource.exists()) resource
+            if (resource.exists()) return resource
             throw MyFileNotFoundException("File not found $fileName!")
         } catch (e: Exception) {
             throw MyFileNotFoundException("File not found $fileName!", e)
