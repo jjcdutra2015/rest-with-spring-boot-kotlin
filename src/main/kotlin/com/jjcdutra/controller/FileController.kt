@@ -31,4 +31,14 @@ class FileController {
             .toUriString()
         return UploadFileResponseVO(fileName, fileDownloadUri, file.contentType!!, file.size)
     }
+
+    @PostMapping("/uploadMultipleFiles")
+    fun uploadMultipleFiles(@RequestParam("files") files: Array<MultipartFile>): List<UploadFileResponseVO> {
+        val uploadFileResponseVOs = arrayListOf<UploadFileResponseVO>()
+        for (file in files) {
+            val uploadFileResponseVO = uploadFile(file)
+            uploadFileResponseVOs.add(uploadFileResponseVO)
+        }
+        return uploadFileResponseVOs
+    }
 }
