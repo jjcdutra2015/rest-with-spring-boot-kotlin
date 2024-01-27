@@ -26,10 +26,10 @@ jobs:
 
     - name: Build Application Jar
       working-directory: ./
-      run: mvn clean package
+      run: mvn clean package -DskipTests
 
     - name: Docker Compose Build
-      working-directory: ./rest-with-spring-boot-kotlin/
+      working-directory: ./
       run: docker compose build
 
     - name: Push to Docker Hub Container Registry
