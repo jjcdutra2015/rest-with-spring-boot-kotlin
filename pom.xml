@@ -18,6 +18,7 @@
 		<kotlin.version>1.7.22</kotlin.version>
 <!--		<dozer.version>6.5.2</dozer.version>-->
 		<dozer.version>6.4.1</dozer.version>
+		<testcontainers.version>1.16.3</testcontainers.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -79,10 +80,16 @@
 			<artifactId>rest-assured</artifactId>
 			<version>5.2.1</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.testcontainers</groupId>-->
+<!--			<artifactId>mysql</artifactId>-->
+<!--			<version>1.18.0</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>mysql</artifactId>
-			<version>1.18.0</version>
+			<artifactId>postgresql</artifactId>
+			<version>1.19.6</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
